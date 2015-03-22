@@ -3,12 +3,6 @@
 The following sets up the Scala evaluation environment.
 
 ```r
-options(java.parameters = c("-Xmx1G", "-XX:MaxPermGen=512M"))
-library(rJava)
-scalaHome <- Sys.getenv("SCALA_HOME", "/usr/local/Cellar/scala210/2.10.4/libexec/")
-#.jinit ourselves to bring logging inside
-.jinit(list.files(file.path(scalaHome, "lib"), full.names = TRUE))
-
 library(jvmr)
 library(knitr)
 scala <- scalaInterpreter()
@@ -50,9 +44,7 @@ val c = b.map(_ * a).toArray
 You can use results across R as well
 
 ```r
-scala$c
+plot(scala["c"])
 ```
 
-```
-## NULL
-```
+![](scala_files/figure-html/unnamed-chunk-4-1.png) 

@@ -34,5 +34,5 @@ val c = b.map(_ * a).toArray
 
 You can use results across R as well
 ```{r}
-plot(interpret(scala, "c"))
+plot(scala["c"])
 ```
