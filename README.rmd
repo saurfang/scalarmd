@@ -1,4 +1,9 @@
-# R Markdown with Scala/Spark
+---
+title: "R Markdown with Scala/Spark"
+output:
+  html_document:
+    keep_md: yes
+---
 
 This shows you how to use [knitr language engine](http://yihui.name/knitr/demo/engines/) to bring Spark data analytics to R Markdown documents.
 

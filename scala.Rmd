@@ -1,0 +1,38 @@
+---
+title: "Scala QuickStart"
+output:
+  html_document:
+    keep_md: yes
+---
+
+The following sets up the Scala evaluation environment.
+```{r setup}
+library(jvmr)
+library(knitr)
+scala <- scalaInterpreter()
+knit_engines$set(scalar = function(options) {
+  code <- paste(options$code, collapse = "\n")
+  output <- capture.output(interpret(scala, code, echo.output = TRUE))
+  engine_output(options, options$code, output)
+})
+```
+
+Now we can create some values in Scala
+```{r, engine='scalar'}
+val a = 2
+```
+
+Value persist across different chunks
+```{r, engine='scalar'}
+val b = (a until 10)
+```
+
+Regular chunk options still apply such as `results='hide'`
+```{r, engine='scalar', results='hide'}
+val c = b.map(_ * a).toArray
+```
+
+You can use results across R as well
+```{r}
+plot(interpret(scala, "c"))
+```

@@ -1,0 +1,31 @@
+---
+title: "SimpleTextClassificationPipeline"
+output:
+  html_document:
+    keep_md: yes
+---
+
+The following sets up the Spark evaluation environment.
+```{r setup}
+options(java.parameters = c("-Xmx1G", "-XX:MaxPermGen=1G"))
+library(rJava)
+sparkHome <- Sys.getenv("SPARK_HOME", "/usr/local/Cellar/apache-spark/1.3.0/libexec")
+#sparkClasspath <- system2(file.path(sparkHome, "bin/compute-classpath.sh"), stdout = TRUE)
+#.jinit ourselves to bring logging inside
+.jinit(list.files(file.path(sparkHome, "lib"), full.names = TRUE))
+library(jvmr)
+library(knitr)
+scala <- scalaInterpreter()
+knit_engines$set(sparkr = function(options) {
+  code <- paste(options$code, collapse = "\n")
+  output <- capture.output(interpret(scala, code, echo.output = options$results != "hide"))
+  engine_output(options, options$code, output)
+})
+read_chunk("SimpleTextClassificationPipeline.scala", labels = "textclass")
+```
+
+Now we can run the entire pipeline now
+```{r textclass, engine='sparkr', results='hide'}
+```
+
+Let's now examine the model results
